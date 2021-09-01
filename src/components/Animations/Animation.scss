@@ -1,0 +1,116 @@
+.animate-cloudy {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .animate__cloud1 {
+    position: absolute;
+    top: -5%;
+    left: -15%;
+    width: 100%;
+    animation: turnLeft 8s ease-in-out infinite alternate;
+  }
+  .animate__cloud1-s1 {
+    position: absolute;
+    bottom: 19%;
+    right: -11%;
+    width: 120%;
+    z-index: 3;
+    animation: turnRight 6s ease-in-out infinite alternate;
+  }
+  .animate__cloud2 {
+    position: absolute;
+    top: 20%;
+    left: -10%;
+    width: 68%;
+    z-index: 2;
+    animation: turnLeft 9s ease-in-out infinite alternate;
+  }
+  .animate__cloud2-s2 {
+    position: absolute;
+    top: 34%;
+    right: -14%;
+    width: 53%;
+    z-index: 1;
+    animation: turnLeft 6s ease-in-out infinite alternate;
+  }
+  .animate__sun {
+    position: absolute;
+    top: -12%;
+    left: 26%;
+    width: 88%;
+    transform-origin: center;
+    animation: rotateSun 7s ease-in-out infinite alternate;
+  }
+}
+@keyframes rotateSun {
+  0%,
+  100% {
+    transform: rotate(20deg);
+  }
+  50% {
+    transform: rotate(-20deg);
+  }
+}
+@keyframes turnLeft {
+  0%,
+  100% {
+    transform: translateX(10px);
+  }
+  50% {
+    transform: translateX(-20px);
+  }
+}
+@keyframes turnRight {
+  0%,
+  100% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+}
+///////ANIMATE RAINNY DAYS
+.animate-rainny {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .rainny__cloud {
+    position: absolute;
+    top: 1%;
+    left: -3%;
+    width: 110%;
+    transform-origin: center;
+  }
+  .rainny__tick {
+    position: absolute;
+    bottom: 6%;
+    left: 17%;
+    width: 100%;
+    animation: downRain 4s ease-in-out infinite alternate;
+  }
+  .rainny__tick2 {
+    position: absolute;
+    bottom: 1%;
+    left: -5%;
+    width: 100%;
+    animation: downRain2 5s ease-in-out infinite alternate;
+  }
+}
+@keyframes downRain {
+  0%,
+  100% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+@keyframes downRain2 {
+  0%,
+  100% {
+    transform: translateY(-15px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}

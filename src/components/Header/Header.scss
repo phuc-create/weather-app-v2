@@ -1,0 +1,173 @@
+//HEADER STYLING
+@mixin flex($justify, $align) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+}
+.header {
+  @include flex(space-between, center);
+  padding: 10px 20px;
+  .header__wrap {
+    text-align: center;
+    color: #ffffff;
+    .header__logo {
+      font-size: 20px;
+    }
+    .header__dropdown {
+      font-size: 17px;
+      @include flex(unset, center);
+      cursor: pointer;
+      .dropdownBtn {
+        font-size: 25px;
+      }
+    }
+  }
+  .biIcon {
+    font-size: 35px;
+    cursor: pointer;
+    transition: 0.4s;
+    color: #ffffff;
+    &:hover {
+      color: #3498db;
+    }
+  }
+}
+//WEATHER SUMMARY STYLING
+.weatherSummary {
+  width: 100%;
+  padding: 9vh 0;
+  @include flex(center, center);
+  .weather__smBox {
+    width: 400px;
+    height: 150px;
+    @include flex(space-between, center);
+    position: relative;
+    .weather__illustration {
+      width: 32%;
+      height: 100%;
+      @include flex(center, center);
+      img.weather__image-show {
+        width: 100%;
+        height: auto;
+      }
+    }
+    .weather__expression {
+      @include flex(flex-start, center);
+      flex-direction: column;
+      position: relative;
+      width: calc(100% - 35%);
+      height: 100%;
+
+      .weather__view {
+        font-size: 25px;
+        color: #ffffff;
+        height: 50%;
+        width: 100%;
+        margin-left: 35px;
+        @include flex(flex-start, center);
+      }
+      .weather__params {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        height: 50%;
+        .__param--infor {
+          width: 50%;
+          font-size: 20px;
+          color: #ffffff;
+          @include flex(center, center);
+          img.temp__icon,
+          img.humid__icon {
+            width: 23%;
+            height: 100%;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+//WEATHER DETAILS STYLING
+.weather__details {
+  position: relative;
+  width: 100%;
+  height: 135px;
+  @include flex(center, center);
+  .dtls {
+    position: relative;
+    width: 25%;
+    height: 100%;
+    color: #ffffff;
+    padding: 10px 0px;
+    // border-left: 1px solid #ffffff;
+    // border-right: 1px solid #ffffff;
+    @include flex(space-between, center);
+    flex-direction: column;
+    .dtls--title {
+      font-size: 20px;
+      font-weight: 600;
+      &.last-child {
+        color: #2d3436;
+      }
+    }
+    .dtls--real {
+      position: relative;
+      font-size: 22px;
+      &.psi-show {
+        font-size: 20px;
+        font-weight: 700;
+        background: green;
+        width: 45px;
+        height: 45px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .dtls--dengue {
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      background: #dfe6e9;
+    }
+    .dtls--circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #2d3436;
+      @include flex(center, center);
+      cursor: pointer;
+      &::before {
+        content: "+";
+        font-size: 30px;
+        color: #2d3436;
+        position: relative;
+      }
+    }
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3) {
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 3px;
+        height: 100%;
+        background: radial-gradient(
+          ellipse at bottom,
+          rgba(255, 255, 255, 1) 0,
+          rgba(255, 255, 255, 0) 75%
+        );
+      }
+    }
+    &.disable-before {
+      @include flex(space-evenly, center);
+    }
+  }
+}
