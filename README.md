@@ -8,7 +8,8 @@
 
 - required : timestamp or date-time, sea level and
   grnd_level or tide
-  JSON TYPE 1:
+
+# JSON TYPE 1:
 
 ```
 {
@@ -53,7 +54,7 @@
 }
 ```
 
-JSON TYPE 2:
+# JSON TYPE 2:
 
 ```
 [
@@ -83,7 +84,7 @@ JSON TYPE 2:
 ]
 ```
 
-JSON TYPE 3:
+# JSON TYPE 3:
 
 ```
 {
