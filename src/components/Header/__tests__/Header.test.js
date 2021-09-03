@@ -8,3 +8,5 @@ it("Render higher order component corectly", () => {
   const div = document.createElement("div");
   ReactDOM.render(<Header />, div);
 });
+
+test("Load and display child components", () => {});

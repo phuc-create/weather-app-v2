@@ -19,7 +19,7 @@ const Header = () => {
         </div>
         <BiBell className="header__notification biIcon" />
       </header>
-      <WeatherSummary />
+      <WeatherSummary status="Clouds" />
       <WeatherDetails />
     </div>
   );
@@ -27,18 +27,18 @@ const Header = () => {
 
 export default Header;
 
-const WeatherSummary = () => {
+const WeatherSummary = ({ status }) => {
   return (
     <section className="weatherSummary" data-testid="weather-summary">
       <div className="weather__smBox">
         <section className="weather__illustration">
+          {/* IF YOU WANNA IMAGE NOT HAVE ANIMATION ,UNCOMMENT CODE BELOW */}
           {/* <img
             className="weather__image-show"
             src={Cloudy}
             alt="Weather Summary Ilustration"
           /> */}
-          <AnimationCloudy />
-          {/* <AnimationRainny /> */}
+          {status === "Clouds" ? <AnimationCloudy /> : <AnimationRainny />}
         </section>
         <section className="weather__expression">
           <div className="weather__view">Cloudy</div>

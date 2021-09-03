@@ -43,7 +43,11 @@ export const AnimationRainny = () => {
         alt="Animation Cloudy Status"
       />
       <img className="rainny__tick" src={Tick} alt="Animation Cloudy Status" />
-      <img className="rainny__tick2" src={Tick} alt="Animation Cloudy Status" />
+      <img
+        className="rainny__tick2"
+        src={Tick2}
+        alt="Animation Cloudy Status"
+      />
     </div>
   );
 };

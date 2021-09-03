@@ -1,0 +1,27 @@
+@media screen and (max-width: 768px) {
+  .weather__details {
+    height: 120px !important;
+    .dtls {
+      .dtls--title {
+        font-size: 17px !important;
+      }
+      .dtls--real {
+        font-size: 20px !important;
+        &.psi-show {
+          font-size: 18px !important;
+          font-weight: 600 !important;
+          width: 40px !important;
+          height: 40px !important;
+        }
+      }
+      .dtls--dengue {
+        width: 50px !important;
+        height: 50px !important;
+      }
+      .dtls--circle {
+        width: 45px !important;
+        height: 45px !important;
+      }
+    }
+  }
+}

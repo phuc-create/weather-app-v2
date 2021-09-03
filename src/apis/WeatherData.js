@@ -1,4 +1,4 @@
-export const data = {
+export const dataWeather = {
   data: {
     cod: "200",
     message: 0,
