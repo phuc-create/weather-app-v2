@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WEATHER APP V2
 
 [![N|Solid](https://cdn.shopify.com/app-store/listing_images/eca0571692b479a33a3575370a411366/banner/CLeL47n0lu8CEAE=.jpg)](https://google.com)
@@ -224,3 +225,6 @@ export const tideDataNew = (data) =>
 NGUYEN HUU PHUC
 
 **Free Code, Let check it!**
+=======
+Link available
+>>>>>>> 9dbe916f05d4340b8887a73a2b1d8c2c5513d18a
