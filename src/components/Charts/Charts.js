@@ -7,11 +7,11 @@ import MoonEdit from "../../img/moon25.png";
 // import { dataWeather } from "../../apis/WeatherData";
 import { dataEdit } from "../../apis/WeatherDataMock";
 import bellcurve from "highcharts/modules/histogram-bellcurve";
-import { checkTimeCurve, handleResizeWidth } from "../../helpers";
+import { checkTimeCurve, handleResizeWidth } from "../../helpers/helpers";
 import { Ctx } from "../../contexts/Contexts";
 bellcurve(Highcharts);
 const Charts = () => {
-  //IF YOU WANNA GET DATA FROM API,UNCOMMENT THE CODE BASE BELOW
+  //IF YOU WANNA GET DATA FROM API,USING CODE IN CONTEXT
   const [dataMock, setDataMock] = useState(dataEdit);
   const { data } = useContext(Ctx);
   useEffect(() => {
@@ -72,71 +72,6 @@ const Charts = () => {
     return dt;
   });
 
-  //SET CUSTOM SYMBOL FOR EACH DOT OF TIDE DEPEND ON VALUE
-  // const tideData = date[0].map((dt) => {
-  //   if (Math.round(dt.dt_txt.split(" ")[1].slice(0, 2)) >= 12) {
-  //     dt = {
-  //       y: dt.main.sea_level - dt.main.grnd_level,
-  //       name: "Day Time",
-  //       // marker: {
-  //       //   symbol: "url(" + Sun + ")",
-  //       // },
-  //     };
-  //   } else {
-  //     dt = {
-  //       y: dt.main.sea_level - dt.main.grnd_level,
-  //       name: "Night Time",
-  //       // marker: {
-  //       //   symbol: "url(" + Moon + ")",
-  //       // },
-  //     };
-  //   }
-  //   return dt;
-  // });
-  //SET CUSTOM SYMBOL FOR EACH DOT OF HUMIDITY DEPEND ON VALUE
-  // const humidData = () => {
-  //   date[0].map((dt) => {
-  //     if (Math.round(dt.dt_txt.split(" ")[1].slice(0, 2)) >= 12) {
-  //       dt = {
-  //         y: dt.main.humidity,
-  //         name: "Day Time",
-  //         marker: {
-  //           symbol: "url(" + SunEdit + ")",
-  //         },
-  //       };
-  //     } else {
-  //       dt = {
-  //         y: dt.main.humidity,
-  //         name: "Night Time",
-  //         marker: {
-  //           symbol: "url(" + MoonEdit + ")",
-  //         },
-  //       };
-  //     }
-  //     return dt;
-  //   });
-  // };
-  //SET CUSTOM SYMBOL FOR EACH DOT OF TEMPORATURE DEPEND ON VALUE
-  // const tempData = date[0].map((dt) => {
-  //   if (dt.main.temp > 27) {
-  //     dt = {
-  //       y: dt.main.temp,
-  //       name: "Temporature-" + dt.dt_txt.split(" ")[1],
-  //       marker: {
-  //         symbol: "url(" + Hot20 + ")",
-  //       },
-  //     };
-  //   } else {
-  //     dt = {
-  //       y: dt.main.temp,
-  //       name: "Temporature-" + dt.dt_txt.split(" ")[1],
-  //       marker: {
-  //         symbol: "url(" + Freeze20 + ")",
-  //       },
-  //     };
-  //   }
-  //   return dt;
-  // });
   //OPTION TO CONFIGURE CHART (REQUIRED)
   const options = {
     chart: {
@@ -154,11 +89,22 @@ const Charts = () => {
       shared: true,
       useHTML: true,
       formatter: function () {
+        // dataMock.map(function (dt) {
+        //   let timeCheker = Number(dt.dt_txt.slice(0, 2));
+
+        //   return `<img src=${
+        //     timeCheker >= 6 && timeCheker <= 18 ? SunEdit : MoonEdit
+        //   }/>${dt.dt_txt.slice(0, 4)}<br>Tide: ${dt.main.sea_level - dt.main.grnd_level}m`;
+        // });
         let timeCheker = Number(this.x.slice(0, 2));
-        return `<img src=${
+        return `<img width='20px' height='20px' src=${
           timeCheker >= 6 && timeCheker <= 18 ? SunEdit : MoonEdit
         }/>${this.x}<br>Tide: ${this.y}m`;
       },
+      caretSize: 5,
+      cornerRadius: 2,
+      xPadding: 10,
+      yPadding: 10,
     },
     title: {
       text: " .",
@@ -229,7 +175,7 @@ const Charts = () => {
           exposeAsGroupOnly: true,
         },
         marker: {
-          radius: 1.5,
+          radius: 5,
         },
         yAxis: 1,
         data: timeData,

@@ -1,5 +1,5 @@
-import Sun from "../src/img/sun30.png";
-import Moon from "../src/img/moon30.png";
+import Sun from "../img/sun30.png";
+import Moon from "../img/moon30.png";
 //CUSTOM DATA OF TIME USING NEW DATA
 
 export const timeData = (data) =>
