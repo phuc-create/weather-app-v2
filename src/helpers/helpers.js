@@ -52,16 +52,15 @@ export const checkTimeCurve = (time) => {
   switch (time) {
     case 6:
     case 18:
-      return 2.5;
+      return 0.5;
     case 8:
     case 16:
-      return 4.2;
+      return 3.1;
     case 10:
     case 14:
-      return 5.8;
+      return 5.9;
     case 12:
-      return 6.5;
-
+      return 7.6;
     default:
       return 0.5;
   }
@@ -74,15 +73,15 @@ export const handleResizeWidth = (dataLength) => {
   //1903 WIDTH FOR 47 VALUE AND CURRENT WIDTH 11000
   //1000 WIDTH FOR 47 VALUE AND CURRENT WIDTH = 1000 * 11000 /1903 = Math.floor(5780)
   const { innerWidth } = window;
-  const initSizeWidthChart = 11000;
+  const initSizeWidthChart = 13000;
   const initLengthItem = 47;
   const maxWidthofCurrentWindow = 1920;
   let lengthOfData = dataLength;
 
   let width = Math.floor((lengthOfData * initSizeWidthChart) / initLengthItem);
-  width = Math.floor((innerWidth * 11000) / maxWidthofCurrentWindow);
+  width = Math.floor((innerWidth * 13000) / maxWidthofCurrentWindow);
   window.addEventListener("resize", () => {
-    width = Math.floor((window.innerWidth * 11000) / maxWidthofCurrentWindow);
+    width = Math.floor((window.innerWidth * 13000) / maxWidthofCurrentWindow);
   });
 
   return width;

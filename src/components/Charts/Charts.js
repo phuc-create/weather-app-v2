@@ -10,7 +10,7 @@ import bellcurve from "highcharts/modules/histogram-bellcurve";
 import { checkTimeCurve, handleResizeWidth } from "../../helpers/helpers";
 import { Ctx } from "../../contexts/Contexts";
 bellcurve(Highcharts);
-const Charts = () => {
+const Charts = (props) => {
   //IF YOU WANNA GET DATA FROM API,USING CODE IN CONTEXT
   const [dataMock, setDataMock] = useState(dataEdit);
   const { data } = useContext(Ctx);
@@ -48,28 +48,49 @@ const Charts = () => {
     return dt;
   });
   //CUSTOM DATA OF TIDE USING NEW DATA
-  const timeData = dataMock.map((dt) => {
+  const timeDay = dataMock.map((dt) => {
     let timeTravel = Number(dt.dt_txt.slice(0, 2));
     if (timeTravel >= 6 && timeTravel <= 18) {
       dt = {
-        name: "Bell test",
+        name: "Day",
         y: checkTimeCurve(timeTravel),
         color: "#f9ca24",
-        // marker: {
-        //   symbol: "url(" + SunEdit + ")",
-        // },
-      };
-    } else {
-      dt = {
-        name: "Bell test",
-        y: checkTimeCurve(timeTravel),
-        color: "#30336b",
-        // marker: {
-        //   symbol: "url(" + MoonEdit + ")",
-        // },
+        plotBackgroundColor: "#e74c3c",
+        segmentColor: "#30336b",
+        dataLabels: {
+          enabled: false,
+        },
       };
     }
     return dt;
+  });
+  const timeNight = dataMock.map((dt2) => {
+    let timeTravel = Number(dt2.dt_txt.slice(0, 2));
+    if (timeTravel >= 18 || timeTravel <= 6) {
+      dt2 = {
+        name: "Night",
+        y: checkTimeCurve(timeTravel),
+        color: "#30336b",
+        segmentColor: "#30336b",
+      };
+    }
+
+    return dt2;
+  });
+  const plotColors = dataMock.map((dt2) => {
+    let timeTravel = Number(dt2.dt_txt.slice(0, 2));
+    if (timeTravel >= 6 && timeTravel <= 18) {
+      dt2 = {
+        color: "red",
+        value: timeTravel,
+      };
+    } else {
+      dt2 = {
+        color: "green",
+        value: timeTravel,
+      };
+    }
+    return dt2;
   });
 
   //OPTION TO CONFIGURE CHART (REQUIRED)
@@ -78,6 +99,16 @@ const Charts = () => {
       type: "areaspline",
       zoomType: "x",
       width: widthChart,
+      // plotBackgroundColor: plotColors ? "red" : "white",
+      //   dataMock.map((dt2) => {
+      //   console.log(this);
+      //   let timeTravel = Number(dt2.dt_txt.slice(0, 2));
+      //   if (timeTravel > 18) {
+      //     return "#34495e";
+      //   } else {
+      //     return "#30336b";
+      //   }
+      // }),
     },
     scrollbar: {
       enabled: false,
@@ -89,20 +120,13 @@ const Charts = () => {
       shared: true,
       useHTML: true,
       formatter: function () {
-        // dataMock.map(function (dt) {
-        //   let timeCheker = Number(dt.dt_txt.slice(0, 2));
-
-        //   return `<img src=${
-        //     timeCheker >= 6 && timeCheker <= 18 ? SunEdit : MoonEdit
-        //   }/>${dt.dt_txt.slice(0, 4)}<br>Tide: ${dt.main.sea_level - dt.main.grnd_level}m`;
-        // });
         let timeCheker = Number(this.x.slice(0, 2));
         return `<img width='20px' height='20px' src=${
           timeCheker >= 6 && timeCheker <= 18 ? SunEdit : MoonEdit
         }/>${this.x}<br>Tide: ${this.y}m`;
       },
       caretSize: 5,
-      cornerRadius: 2,
+      cornerRadius: 4,
       xPadding: 10,
       yPadding: 10,
     },
@@ -121,6 +145,7 @@ const Charts = () => {
         }),
       },
       { alignTicks: false, opposite: true },
+      { alignTicks: false, opposite: true },
     ],
     yAxis: [
       {
@@ -137,51 +162,80 @@ const Charts = () => {
         },
         showEmpty: false,
       },
-    ],
-    plotOptions: {
-      series: {
-        fillColor: {
-          linearGradient: [0, 0, 0, 300],
-          stops: [
-            [0, Highcharts.getOptions().colors[0]],
-            [
-              1,
-              Highcharts.color(Highcharts.getOptions().colors[0])
-                .setOpacity(0)
-                .get("rgba"),
-            ],
-          ],
+      {
+        visible: false,
+        title: {
+          text: "",
         },
+        showEmpty: false,
       },
-    },
+    ],
+    // plotOptions: {
+    //   series: {
+    //     fillColor: {
+    //       linearGradient: [0, 0, 0, 300],
+    //       stops: [
+    //         [0, Highcharts.getOptions().colors[0]],
+    //         [
+    //           1,
+    //           Highcharts.color(Highcharts.getOptions().colors[0])
+    //             .setOpacity(0)
+    //             .get("rgba"),
+    //         ],
+    //       ],
+    //     },
+    //   },
+    // },
     series: [
       {
         name: "Tide ~ m",
         //data: tideData,
+        color: "#2193b0",
         data: tideDataNew,
         yAxis: 1,
-        step: true,
+        step: false,
         accessibility: {
           exposeAsGroupOnly: true,
         },
         marker: {
           radius: 1.5,
         },
+        crisp: false,
+        dataGrouping: {
+          enabled: false,
+        },
       },
       {
-        name: "Sunset & Sunrise",
-        color: "#f9ca24",
+        name: "Sunset",
+        type: "spline",
+        color: "rgba(241, 196, 15,1.0)",
         accessibility: {
           exposeAsGroupOnly: true,
         },
         marker: {
-          radius: 5,
+          radius: 2,
         },
         yAxis: 1,
-        data: timeData,
+        data: timeDay,
+      },
+
+      {
+        type: "spline",
+        name: "Sunrise",
+        accessibility: {
+          exposeAsGroupOnly: true,
+        },
+        color: "#2c3e50",
+        yAxis: 1,
+        marker: {
+          radius: 2,
+        },
+        data: timeNight,
+        crisp: false,
       },
     ],
   };
+
   return (
     <div className="charts-show">
       <div className="chart__title--abs">
@@ -189,7 +243,11 @@ const Charts = () => {
       </div>
       <div className="label--hidden-brand"></div>
       <div className="chart-container">
-        <HighchartsReact highcharts={Highcharts} options={options} />
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+          containerProps={{ className: props.className }}
+        />
       </div>
       {/* <div className="sunrise__sunset">
         <img src={SunEdit} alt="Hello world" />
@@ -200,5 +258,4 @@ const Charts = () => {
     </div>
   );
 };
-
 export default Charts;
