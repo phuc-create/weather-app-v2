@@ -4,15 +4,21 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import SunEdit from "../../img/sun25.png";
 import MoonEdit from "../../img/moon25.png";
+import Sun from "../../img/sun30.png";
 // import { dataWeather } from "../../apis/WeatherData";
 import { dataEdit } from "../../apis/WeatherDataMock";
 import bellcurve from "highcharts/modules/histogram-bellcurve";
-import { checkTimeCurve, handleResizeWidth } from "../../helpers/helpers";
+import {
+  calculatePlots,
+  checkTimeCurve,
+  handleResizeWidth,
+} from "../../helpers/helpers";
 import { Ctx } from "../../contexts/Contexts";
 bellcurve(Highcharts);
 const Charts = (props) => {
   //IF YOU WANNA GET DATA FROM API,USING CODE IN CONTEXT
   const [dataMock, setDataMock] = useState(dataEdit);
+  //TEST DATA FROM API
   const { data } = useContext(Ctx);
   useEffect(() => {
     const setDataChart = () => {
@@ -26,34 +32,74 @@ const Charts = (props) => {
       setWidthChart(handleResizeWidth(dataMock.length));
     });
   }, [dataMock]);
+  // eslint-disable-next-line no-unused-vars
+  const addRect = (chart) => {
+    document.querySelector(".rect").remove();
+    let xAxis = chart.xAxis[0],
+      // eslint-disable-next-line no-unused-vars
+      yAxis = chart.yAxis[0];
+    chart.renderer
+      .rect(
+        xAxis.toPixels(1),
+        110,
+        xAxis.toPixels(2) - xAxis.toPixels(1),
+        100,
+        5
+      )
+      .attr({
+        "stroke-width": 2,
+        stroke: "red",
+        fill: "transparent",
+        zIndex: 0,
+      })
+      .addClass("rect")
+      .add();
+    chart.renderer
+      .rect(0, 0, chart.plotLeft, chart.chartHeight + chart.plotTop, 5)
+      .attr({
+        fill: "white",
+        zIndex: 0,
+      })
+      .addClass("rect")
+      .add();
+  };
   //CUSTOM DATA OF TIDE USING NEW DATA
   const tideDataNew = dataMock.map((dt) => {
     if (Number(dt.dt_txt.slice(0, 2)) >= 12) {
       dt = {
         y: dt.main.sea_level - dt.main.grnd_level,
         name: "Day Time",
-        // marker: {
-        //   symbol: "url(" + Sun + ")",
-        // },
+        marker: {
+          hover: {
+            symbol: "url(" + SunEdit + ")",
+          },
+        },
       };
     } else {
       dt = {
         y: dt.main.sea_level - dt.main.grnd_level,
         name: "Night Time",
-        // marker: {
-        //   symbol: "url(" + Moon + ")",
-        // },
+        marker: {
+          hover: {
+            symbol: "url(" + MoonEdit + ")",
+          },
+        },
       };
     }
     return dt;
   });
-  //CUSTOM DATA OF TIDE USING NEW DATA
+
+  //CUSTOM DAYTIME OF TIDE USING NEW DATA
   const timeDay = dataMock.map((dt) => {
     let timeTravel = Number(dt.dt_txt.slice(0, 2));
     if (timeTravel >= 6 && timeTravel <= 18) {
       dt = {
         name: "Day",
         y: checkTimeCurve(timeTravel),
+        marker: {
+          enabled: checkTimeCurve(timeTravel) === 16 ? true : false,
+          symbol: "url(" + Sun + ")",
+        },
         color: "#f9ca24",
         plotBackgroundColor: "#e74c3c",
         segmentColor: "#30336b",
@@ -64,6 +110,8 @@ const Charts = (props) => {
     }
     return dt;
   });
+
+  //CUSTOM NIGHTTIME OF TIDE USING NEW DATA
   const timeNight = dataMock.map((dt2) => {
     let timeTravel = Number(dt2.dt_txt.slice(0, 2));
     if (timeTravel >= 18 || timeTravel <= 6) {
@@ -74,41 +122,25 @@ const Charts = (props) => {
         segmentColor: "#30336b",
       };
     }
-
     return dt2;
   });
-  const plotColors = dataMock.map((dt2) => {
-    let timeTravel = Number(dt2.dt_txt.slice(0, 2));
-    if (timeTravel >= 6 && timeTravel <= 18) {
-      dt2 = {
-        color: "red",
-        value: timeTravel,
-      };
-    } else {
-      dt2 = {
-        color: "green",
-        value: timeTravel,
-      };
-    }
-    return dt2;
-  });
-
   //OPTION TO CONFIGURE CHART (REQUIRED)
   const options = {
     chart: {
       type: "areaspline",
       zoomType: "x",
       width: widthChart,
-      // plotBackgroundColor: plotColors ? "red" : "white",
-      //   dataMock.map((dt2) => {
-      //   console.log(this);
-      //   let timeTravel = Number(dt2.dt_txt.slice(0, 2));
-      //   if (timeTravel > 18) {
-      //     return "#34495e";
-      //   } else {
-      //     return "#30336b";
-      //   }
-      // }),
+      events: {
+        load: function () {
+          console.log(this);
+          if (this.options.chart.type === "areaspline") {
+            this.xAxis[0].update({
+              minPadding: -0.062,
+              maxPadding: -0.062,
+            });
+          }
+        },
+      },
     },
     scrollbar: {
       enabled: false,
@@ -120,10 +152,12 @@ const Charts = (props) => {
       shared: true,
       useHTML: true,
       formatter: function () {
-        let timeCheker = Number(this.x.slice(0, 2));
-        return `<img width='20px' height='20px' src=${
-          timeCheker >= 6 && timeCheker <= 18 ? SunEdit : MoonEdit
-        }/>${this.x}<br>Tide: ${this.y}m`;
+        //let timeCheker = Number(this.x.slice(0, 2));
+        // return `<img width='20px' height='20px' src=${
+        //   timeCheker >= 6 && timeCheker <= 18 ? SunEdit : MoonEdit
+        // }/>${this.x}<br>Tide: ${this.y}m`;
+        return `<h3>
+        Tide: ${this.y}m</h3>`;
       },
       caretSize: 5,
       cornerRadius: 4,
@@ -135,7 +169,6 @@ const Charts = (props) => {
     },
     xAxis: [
       {
-        crosshair: true,
         categories: dataMock.map((dt) => {
           if (Number(dt.dt_txt.slice(0, 2)) > 12) {
             return `${dt.dt_txt.slice(0, 5)}PM`;
@@ -143,10 +176,26 @@ const Charts = (props) => {
             return `${dt.dt_txt.slice(0, 5)}AM`;
           }
         }),
+        plotBands: calculatePlots(dataMock),
       },
-      { alignTicks: false, opposite: true },
-      { alignTicks: false, opposite: true },
+      {
+        alignTicks: false,
+        opposite: true,
+      },
+      {
+        alignTicks: false,
+        opposite: true,
+      },
     ],
+    plotOptions: {
+      series: {
+        pointPlacement: "on",
+        lineWidth: 1,
+        // marker: {
+        //   enabled: false,
+        // },
+      },
+    },
     yAxis: [
       {
         title: {
@@ -170,27 +219,11 @@ const Charts = (props) => {
         showEmpty: false,
       },
     ],
-    // plotOptions: {
-    //   series: {
-    //     fillColor: {
-    //       linearGradient: [0, 0, 0, 300],
-    //       stops: [
-    //         [0, Highcharts.getOptions().colors[0]],
-    //         [
-    //           1,
-    //           Highcharts.color(Highcharts.getOptions().colors[0])
-    //             .setOpacity(0)
-    //             .get("rgba"),
-    //         ],
-    //       ],
-    //     },
-    //   },
-    // },
     series: [
       {
         name: "Tide ~ m",
         //data: tideData,
-        color: "#2193b0",
+        color: "#74b9ff",
         data: tideDataNew,
         yAxis: 1,
         step: false,
@@ -198,6 +231,7 @@ const Charts = (props) => {
           exposeAsGroupOnly: true,
         },
         marker: {
+          enabled: false,
           radius: 1.5,
         },
         crisp: false,
@@ -213,10 +247,10 @@ const Charts = (props) => {
           exposeAsGroupOnly: true,
         },
         marker: {
-          radius: 2,
+          enabled: false,
         },
-        yAxis: 1,
         data: timeDay,
+        yAxis: 1,
       },
 
       {
@@ -228,7 +262,8 @@ const Charts = (props) => {
         color: "#2c3e50",
         yAxis: 1,
         marker: {
-          radius: 2,
+          enabled: false,
+          symbol: "url(" + MoonEdit + ")",
         },
         data: timeNight,
         crisp: false,
@@ -238,8 +273,14 @@ const Charts = (props) => {
 
   return (
     <div className="charts-show">
-      <div className="chart__title--abs">
-        Tide•<span className="__title--abs-name">Sunrire & Sunset</span>
+      <div className="chart__title--abs" style={{ color: "#74b9ff" }}>
+        Tide&nbsp;•&nbsp;&nbsp;
+        <span
+          className="__title--abs-name"
+          style={{ color: "rgba(241, 196, 15,1.0)" }}
+        >
+          Sunrire & Sunset
+        </span>
       </div>
       <div className="label--hidden-brand"></div>
       <div className="chart-container">

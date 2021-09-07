@@ -52,17 +52,17 @@ export const checkTimeCurve = (time) => {
   switch (time) {
     case 6:
     case 18:
-      return 0.5;
+      return 0.7;
     case 8:
     case 16:
-      return 3.1;
+      return 3.6;
     case 10:
     case 14:
-      return 5.9;
+      return 6.3;
     case 12:
-      return 7.6;
+      return 7.5;
     default:
-      return 0.5;
+      return 0.7;
   }
 };
 export const handleResizeWidth = (dataLength) => {
@@ -88,3 +88,38 @@ export const handleResizeWidth = (dataLength) => {
 };
 
 //18001166 PHONE NUMBER OF WIFI////////////////////////////////
+//SET BACKGROUND FOR NIGHT TIME
+export const calculatePlots = (arrData) => {
+  let plotPositions = [];
+  //7 steps for 1 night
+  // let timeF = [0, 2, 4, 6, 18, 20, 22];
+  let from = 0,
+    to = 3,
+    day = 1;
+
+  for (let i = 0; i < Math.max(arrData.length / 6) / 2 + 1; i++) {
+    plotPositions.push({
+      label: {
+        text: `Day ${day}`,
+        style: {
+          color: "#34495e",
+          fontFamily: "Arial, Helvetica, sans-serif;",
+          fontSize: "20px",
+          fontWeight: "600",
+          padding: "20px",
+          marginTop: "20px",
+          backgroundColor: "red",
+          zIndex: 20,
+        },
+      },
+      color: "rgba(0,0,0,0.1)",
+      from: from,
+      to: to,
+    });
+    from = to + 6;
+    to = to + 12;
+    day++;
+  }
+
+  return plotPositions;
+};
