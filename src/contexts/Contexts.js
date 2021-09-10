@@ -7,7 +7,7 @@ import {
   FETCH_DATA_SUCCESS,
 } from "./Action.types";
 
-export const Ctx = createContext([]);
+export const Ctx = createContext([1, 2, 3]);
 
 const ContextProvider = ({ children }) => {
   const [data, dispatch] = useReducer(Reducers, {

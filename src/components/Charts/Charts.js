@@ -19,9 +19,13 @@ export const execCalculatePlots = (data) => calculatePlots(data);
 export const execCheckTimeCurve = (time) => checkTimeCurve(time);
 export const exechandleResizeWidth = (dataLength) =>
   handleResizeWidth(dataLength);
+
 const Charts = (props) => {
   //IF YOU WANNA GET DATA FROM API,USING CODE IN CONTEXT
   const [dataMock, setDataMock] = useState(dataEdit);
+  const [widthChart, setWidthChart] = useState(
+    handleResizeWidth(dataMock.length)
+  );
   //TEST DATA FROM API
   const { data } = useContext(Ctx);
   useEffect(() => {
@@ -30,45 +34,13 @@ const Charts = (props) => {
     };
     setDataChart();
   }, []);
-  const [widthChart, setWidthChart] = useState(
-    exechandleResizeWidth(dataMock.length)
-  );
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      setWidthChart(exechandleResizeWidth(dataMock.length));
-    });
-  }, [dataMock]);
-  // eslint-disable-next-line no-unused-vars
-  const addRect = (chart) => {
-    document.querySelector(".rect").remove();
-    let xAxis = chart.xAxis[0],
-      // eslint-disable-next-line no-unused-vars
-      yAxis = chart.yAxis[0];
-    chart.renderer
-      .rect(
-        xAxis.toPixels(1),
-        110,
-        xAxis.toPixels(2) - xAxis.toPixels(1),
-        100,
-        5
-      )
-      .attr({
-        "stroke-width": 2,
-        stroke: "red",
-        fill: "transparent",
-        zIndex: 0,
-      })
-      .addClass("rect")
-      .add();
-    chart.renderer
-      .rect(0, 0, chart.plotLeft, chart.chartHeight + chart.plotTop, 5)
-      .attr({
-        fill: "white",
-        zIndex: 0,
-      })
-      .addClass("rect")
-      .add();
-  };
+    const resizeHandle = () => {
+      setWidthChart(handleResizeWidth(dataMock.length));
+    };
+    window.addEventListener("resize", () => resizeHandle(dataMock.length));
+  }, [dataMock.length]);
+
   //CUSTOM DATA OF TIDE USING NEW DATA
   const tideDataNew = dataMock.map((dt) => {
     if (Number(dt.dt_txt.slice(0, 2)) >= 12) {
@@ -156,10 +128,6 @@ const Charts = (props) => {
       shared: true,
       useHTML: true,
       formatter: function () {
-        //let timeCheker = Number(this.x.slice(0, 2));
-        // return `<img width='20px' height='20px' src=${
-        //   timeCheker >= 6 && timeCheker <= 18 ? SunEdit : MoonEdit
-        // }/>${this.x}<br>Tide: ${this.y}m`;
         return `<h3>
         Tide: ${this.y}m</h3>`;
       },

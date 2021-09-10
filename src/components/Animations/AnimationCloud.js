@@ -9,7 +9,7 @@ import Tick2 from "../../img/RainnyAnimation/tick2.png";
 import "./Animation.scss";
 export const AnimationCloudy = () => {
   return (
-    <div className="animate__cloud">
+    <div className="animate__cloud" data-testid="cloudy-display">
       <img
         className="animate__cloud--cloud1"
         src={Cloud1}
@@ -31,12 +31,13 @@ export const AnimationCloudy = () => {
         alt="Animation Cloudy Status"
       />
       <img className="animate__sun" src={Sun} alt="Animation Cloudy Status" />
+      <div className="testing-component"></div>
     </div>
   );
 };
 export const AnimationRainny = () => {
   return (
-    <div className="rainny">
+    <div className="rainny" data-testid="rainy-display">
       <img
         className="rainny__cloud"
         src={CloudRain}
