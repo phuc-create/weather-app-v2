@@ -80,9 +80,8 @@ export const handleResizeWidth = (dataLength) => {
 
   let width = Math.floor((lengthOfData * initSizeWidthChart) / initLengthItem);
   width = Math.floor((innerWidth * 13000) / maxWidthofCurrentWindow);
-  window.addEventListener("resize", () => {
-    width = Math.floor((window.innerWidth * 13000) / maxWidthofCurrentWindow);
-  });
+
+  width = Math.floor((window.innerWidth * 13000) / maxWidthofCurrentWindow);
 
   return width;
 };
@@ -123,3 +122,95 @@ export const calculatePlots = (arrData) => {
 
   return plotPositions;
 };
+export const objectTest = [
+  {
+    label: {
+      text: "Day 1",
+      style: {
+        color: "#34495e",
+        fontFamily: "Arial, Helvetica, sans-serif;",
+        fontSize: "20px",
+        fontWeight: "600",
+        padding: "20px",
+        marginTop: "20px",
+        backgroundColor: "red",
+        zIndex: 20,
+      },
+    },
+    color: "rgba(0,0,0,0.1)",
+    from: 0,
+    to: 3,
+  },
+  {
+    label: {
+      text: "Day 2",
+      style: {
+        color: "#34495e",
+        fontFamily: "Arial, Helvetica, sans-serif;",
+        fontSize: "20px",
+        fontWeight: "600",
+        padding: "20px",
+        marginTop: "20px",
+        backgroundColor: "red",
+        zIndex: 20,
+      },
+    },
+    color: "rgba(0,0,0,0.1)",
+    from: 9,
+    to: 15,
+  },
+  {
+    label: {
+      text: "Day 3",
+      style: {
+        color: "#34495e",
+        fontFamily: "Arial, Helvetica, sans-serif;",
+        fontSize: "20px",
+        fontWeight: "600",
+        padding: "20px",
+        marginTop: "20px",
+        backgroundColor: "red",
+        zIndex: 20,
+      },
+    },
+    color: "rgba(0,0,0,0.1)",
+    from: 21,
+    to: 27,
+  },
+  {
+    label: {
+      text: "Day 4",
+      style: {
+        color: "#34495e",
+        fontFamily: "Arial, Helvetica, sans-serif;",
+        fontSize: "20px",
+        fontWeight: "600",
+        padding: "20px",
+        marginTop: "20px",
+        backgroundColor: "red",
+        zIndex: 20,
+      },
+    },
+    color: "rgba(0,0,0,0.1)",
+    from: 33,
+    to: 39,
+  },
+  {
+    label: {
+      text: "Day 5",
+      style: {
+        color: "#34495e",
+        fontFamily: "Arial, Helvetica, sans-serif;",
+        fontSize: "20px",
+        fontWeight: "600",
+        padding: "20px",
+        marginTop: "20px",
+        backgroundColor: "red",
+        zIndex: 20,
+      },
+    },
+    color: "rgba(0,0,0,0.1)",
+    from: 45,
+    to: 51,
+  },
+];

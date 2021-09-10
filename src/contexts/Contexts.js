@@ -1,13 +1,13 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import { getWeatherApi } from "../apis/WeatherApi";
-import Reducers from "../reducers/Reducers";
+import Reducers from "./reducers/Reducers";
 import {
   FETCH_DATA_FAILURE,
   FETCH_DATA_REQUEST,
   FETCH_DATA_SUCCESS,
 } from "./Action.types";
 
-export const Ctx = createContext(null);
+export const Ctx = createContext([]);
 
 const ContextProvider = ({ children }) => {
   const [data, dispatch] = useReducer(Reducers, {

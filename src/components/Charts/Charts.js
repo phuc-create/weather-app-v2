@@ -15,6 +15,10 @@ import {
 } from "../../helpers/helpers";
 import { Ctx } from "../../contexts/Contexts";
 bellcurve(Highcharts);
+export const execCalculatePlots = (data) => calculatePlots(data);
+export const execCheckTimeCurve = (time) => checkTimeCurve(time);
+export const exechandleResizeWidth = (dataLength) =>
+  handleResizeWidth(dataLength);
 const Charts = (props) => {
   //IF YOU WANNA GET DATA FROM API,USING CODE IN CONTEXT
   const [dataMock, setDataMock] = useState(dataEdit);
@@ -26,10 +30,12 @@ const Charts = (props) => {
     };
     setDataChart();
   }, []);
-  const [widthChart, setWidthChart] = useState(handleResizeWidth(data.length));
+  const [widthChart, setWidthChart] = useState(
+    exechandleResizeWidth(dataMock.length)
+  );
   useEffect(() => {
     window.addEventListener("resize", () => {
-      setWidthChart(handleResizeWidth(dataMock.length));
+      setWidthChart(exechandleResizeWidth(dataMock.length));
     });
   }, [dataMock]);
   // eslint-disable-next-line no-unused-vars
@@ -88,7 +94,6 @@ const Charts = (props) => {
     }
     return dt;
   });
-
   //CUSTOM DAYTIME OF TIDE USING NEW DATA
   const timeDay = dataMock.map((dt) => {
     let timeTravel = Number(dt.dt_txt.slice(0, 2));
@@ -117,7 +122,7 @@ const Charts = (props) => {
     if (timeTravel >= 18 || timeTravel <= 6) {
       dt2 = {
         name: "Night",
-        y: checkTimeCurve(timeTravel),
+        y: execCheckTimeCurve(timeTravel),
         color: "#30336b",
         segmentColor: "#30336b",
       };
@@ -132,7 +137,6 @@ const Charts = (props) => {
       width: widthChart,
       events: {
         load: function () {
-          console.log(this);
           if (this.options.chart.type === "areaspline") {
             this.xAxis[0].update({
               minPadding: -0.062,
@@ -176,7 +180,7 @@ const Charts = (props) => {
             return `${dt.dt_txt.slice(0, 5)}AM`;
           }
         }),
-        plotBands: calculatePlots(dataMock),
+        plotBands: execCalculatePlots(dataMock),
       },
       {
         alignTicks: false,

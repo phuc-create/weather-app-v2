@@ -2,7 +2,7 @@ import {
   FETCH_DATA_FAILURE,
   FETCH_DATA_REQUEST,
   FETCH_DATA_SUCCESS,
-} from "../contexts/Action.types";
+} from "../Action.types";
 const Reducers = (state, action) => {
   const { type, payload } = action;
   switch (type) {

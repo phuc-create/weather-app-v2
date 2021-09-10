@@ -1,116 +1,93 @@
-.animate-cloudy {
+@mixin setCloud($t, $l, $b, $r, $z, $w, $animateName, $time) {
+  position: absolute;
+  top: $t;
+  left: $l;
+  bottom: $b;
+  right: $r;
+  width: $w;
+  z-index: $z;
+  animation: $animateName $time ease-in-out infinite alternate;
+}
+
+.animate__cloud {
   width: 100%;
   height: 100%;
   position: relative;
-  .animate__cloud1 {
-    position: absolute;
-    top: -5%;
-    left: -15%;
-    width: 100%;
-    animation: turnLeft 8s ease-in-out infinite alternate;
+  &--cloud1 {
+    @include setCloud(-5%, -15%, unset, unset, unset, 100%, 8s, turnLeft);
   }
-  .animate__cloud1-s1 {
-    position: absolute;
-    bottom: 19%;
-    right: -11%;
-    width: 120%;
-    z-index: 3;
-    animation: turnRight 6s ease-in-out infinite alternate;
+  &--cloud1-s1 {
+    @include setCloud(unset, unset, 19%, -11%, 3, 120%, turnRight, 6s);
   }
-  .animate__cloud2 {
-    position: absolute;
-    top: 20%;
-    left: -10%;
-    width: 68%;
-    z-index: 2;
-    animation: turnLeft 9s ease-in-out infinite alternate;
+  &--cloud2 {
+    @include setCloud(20%, -10%, unset, unset, 2, 68%, turnLeft, 9s);
   }
-  .animate__cloud2-s2 {
-    position: absolute;
-    top: 34%;
-    right: -14%;
-    width: 53%;
-    z-index: 1;
-    animation: turnLeft 6s ease-in-out infinite alternate;
+  &--cloud2-s2 {
+    @include setCloud(34%, unset, unset, -14%, 1, 53%, turnLeft, 6s);
   }
   .animate__sun {
-    position: absolute;
-    top: -12%;
-    left: 26%;
-    width: 88%;
-    transform-origin: center;
-    animation: rotateSun 7s ease-in-out infinite alternate;
+    @include setCloud(-12%, 26%, unset, unset, unset, 88%, rotateSun, 7s);
+  }
+  @keyframes rotateSun {
+    0%,
+    100% {
+      transform: rotate(15deg);
+    }
+    50% {
+      transform: rotate(-15deg);
+    }
+  }
+  @keyframes turnLeft {
+    0%,
+    100% {
+      transform: translateX(5px);
+    }
+    50% {
+      transform: translateX(-15px);
+    }
+  }
+  @keyframes turnRight {
+    0%,
+    100% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(15px);
+    }
   }
 }
-@keyframes rotateSun {
-  0%,
-  100% {
-    transform: rotate(20deg);
-  }
-  50% {
-    transform: rotate(-20deg);
-  }
-}
-@keyframes turnLeft {
-  0%,
-  100% {
-    transform: translateX(10px);
-  }
-  50% {
-    transform: translateX(-20px);
-  }
-}
-@keyframes turnRight {
-  0%,
-  100% {
-    transform: translateX(-10px);
-  }
-  50% {
-    transform: translateX(20px);
-  }
-}
+
 ///////ANIMATE RAINNY DAYS
-.animate-rainny {
+.rainny {
   width: 100%;
   height: 100%;
   position: relative;
-  .rainny__cloud {
-    position: absolute;
-    top: 1%;
-    left: -3%;
-    width: 110%;
-    transform-origin: center;
+  &__cloud {
+    @include setCloud(1%, -3%, unset, unset, unset, 110%, noneAnimate, 0s);
   }
-  .rainny__tick {
-    position: absolute;
-    bottom: 6%;
-    left: 17%;
-    width: 100%;
-    animation: downRain 4s ease-in-out infinite alternate;
+  &__tick {
+    @include setCloud(unset, 17%, 6%, unset, unset, 100%, downRain, 4s);
   }
-  .rainny__tick2 {
-    position: absolute;
-    bottom: 1%;
-    left: -5%;
-    width: 100%;
-    animation: downRain2 5s ease-in-out infinite alternate;
+
+  &__tick2 {
+    @include setCloud(unset, -5%, 1%, unset, unset, 100%, downRain2, 5s);
   }
-}
-@keyframes downRain {
-  0%,
-  100% {
-    transform: translateY(10px);
+  @keyframes downRain {
+    0%,
+    100% {
+      transform: translateY(5px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
   }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-@keyframes downRain2 {
-  0%,
-  100% {
-    transform: translateY(-15px);
-  }
-  50% {
-    transform: translateY(5px);
+  @keyframes downRain2 {
+    0%,
+    100% {
+      transform: translateY(-10px);
+    }
+    50% {
+      transform: translateY(0px);
+    }
   }
 }

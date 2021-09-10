@@ -25,3 +25,50 @@
     }
   }
 }
+@media screen and (max-width: 599px) {
+  .weatherSummary {
+    padding: 10vh 0 !important;
+    .weather__smBox {
+      width: 370px !important;
+      height: 140px !important;
+      .weather__illustration {
+        width: 28% !important;
+      }
+      .weather__infor .weather__params .weather__param--infor {
+        font-size: 16px !important;
+        img.temp__icon,
+        img.humid__icon {
+          width: 17% !important;
+        }
+      }
+      .weather__infor--view {
+        font-size: 21px !important;
+      }
+    }
+  }
+}
+@media screen and (max-width: 415px) {
+  .weatherSummary .weather__smBox {
+    width: 286px !important;
+    height: 100px !important;
+  }
+  .weather__details .dtls {
+    .dtls--title {
+      font-size: 14px !important;
+    }
+    .dtls--real.psi-show {
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      width: 37px !important;
+      height: 37px !important;
+    }
+    .dtls--dengue {
+      width: 40px !important;
+      height: 40px !important;
+    }
+    .dtls--circle {
+      width: 40px !important;
+      height: 40px !important;
+    }
+  }
+}

@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Header.scss";
 import { BiBell, BiChevronDown, BiMenuAltLeft } from "react-icons/bi";
 import Temporature from "../../img/thermometer.png";
 import Humidity from "../../img/humidity.png";
 import { AnimationCloudy, AnimationRainny } from "../Animations/AnimationCloud";
+import { Ctx } from "../../contexts/Contexts";
 
 const Header = () => {
+  const { data } = useContext(Ctx);
+
   return (
-    <div>
+    <div className="header-wrap">
+      {data && data.isLoading ? <p>Loading ...</p> : ""}
       <header className="header">
         <BiMenuAltLeft className="header__menu biIcon" />
         <div className="header__wrap">
@@ -27,7 +31,7 @@ const Header = () => {
 
 export default Header;
 
-const WeatherSummary = ({ status }) => {
+export const WeatherSummary = ({ status }) => {
   return (
     <section className="weatherSummary" data-testid="weather-summary">
       <div className="weather__smBox">
@@ -40,14 +44,14 @@ const WeatherSummary = ({ status }) => {
           /> */}
           {status === "Clouds" ? <AnimationCloudy /> : <AnimationRainny />}
         </section>
-        <section className="weather__expression">
-          <div className="weather__view">Cloudy</div>
+        <section className="weather__infor">
+          <div className="weather__infor--view">Cloudy</div>
           <div className="weather__params">
-            <span className="__param--infor temp">
+            <span className="weather__param--infor temp">
               <img className="temp__icon" src={Temporature} alt="Temporature" />{" "}
               38.0°C
             </span>
-            <span className="__param--infor humidity">
+            <span className="weather__param--infor humidity">
               <img className="humid__icon" src={Humidity} alt="Humidity" /> 35%
             </span>
           </div>
@@ -56,7 +60,7 @@ const WeatherSummary = ({ status }) => {
     </section>
   );
 };
-const WeatherDetails = () => {
+export const WeatherDetails = () => {
   return (
     <section className="weather__details" data-testid="weather-details">
       <div className="dtls">

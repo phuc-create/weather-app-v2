@@ -52,14 +52,14 @@
         height: auto;
       }
     }
-    .weather__expression {
+    .weather__infor {
       @include flex(flex-start, center);
       flex-direction: column;
       position: relative;
       width: calc(100% - 35%);
       height: 100%;
 
-      .weather__view {
+      &--view {
         font-size: 25px;
         color: #ffffff;
         height: 50%;
@@ -73,7 +73,7 @@
         align-items: center;
         position: relative;
         height: 50%;
-        .__param--infor {
+        .weather__param--infor {
           width: 50%;
           font-size: 20px;
           color: #ffffff;
@@ -106,14 +106,14 @@
     // border-right: 1px solid #ffffff;
     @include flex(space-between, center);
     flex-direction: column;
-    .dtls--title {
+    &--title {
       font-size: 20px;
       font-weight: 600;
       &.last-child {
         color: #2d3436;
       }
     }
-    .dtls--real {
+    &--real {
       position: relative;
       font-size: 22px;
       &.psi-show {
@@ -128,7 +128,7 @@
         align-items: center;
       }
     }
-    .dtls--dengue {
+    &--dengue {
       width: 60px;
       height: 60px;
       cursor: pointer;
@@ -136,7 +136,7 @@
       border: 2px solid #ffffff;
       background: #dfe6e9;
     }
-    .dtls--circle {
+    &--circle {
       width: 50px;
       height: 50px;
       border-radius: 50%;
